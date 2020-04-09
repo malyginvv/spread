@@ -1,0 +1,17 @@
+/**
+ * Agent state.
+ * @readonly
+ * @enum {{color: string}}
+ */
+export const AgentState = Object.freeze({
+    HEALTHY: {color: '#178000'},
+    SICK: {color: '#806800'},
+    IMMUNE: {color: '#6a0080'},
+    DECEASED: {color: '#262626'},
+});
+
+export class SimulationState {
+    constructor(particles) {
+        this.particles = particles;
+    }
+}
