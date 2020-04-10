@@ -1,5 +1,6 @@
 import PriorityQueue from "./priority-queue.js";
 import {CollisionWithWall, EventType, ParticleCollision, Redraw} from './event.js'
+import Predictor from "./predictor.js";
 
 const FPS = 60;
 /**
@@ -13,6 +14,7 @@ export default class Simulation {
         // simulation clock time
         this.time = 0.0;
         this.pq = new PriorityQueue();
+        this.predictor = new Predictor(state.environment);
     }
 
     init(limit) {
@@ -66,7 +68,7 @@ export default class Simulation {
     predict(particle, limit) {
         // particle-particle collisions
         for (let otherParticle of this.state.particles) {
-            let dt = particle.timeToHit(otherParticle);
+            let dt = this.predictor.timeToHit(particle, otherParticle);
             let collisionTime = this.time + dt;
             if (collisionTime <= limit) {
                 this.pq.insert(new ParticleCollision(collisionTime, particle, otherParticle));
@@ -74,8 +76,8 @@ export default class Simulation {
         }
 
         // particle-wall collisions
-        let dtX = particle.timeToHitVerticalWall();
-        let dtY = particle.timeToHitHorizontalWall();
+        let dtX = this.predictor.timeToHitVerticalWall(particle);
+        let dtY = this.predictor.timeToHitHorizontalWall(particle);
         if (this.time + dtX <= limit) {
             this.pq.insert(new CollisionWithWall(this.time + dtX, particle, true));
         }

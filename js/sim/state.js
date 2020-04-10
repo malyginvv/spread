@@ -11,7 +11,8 @@ export const AgentState = Object.freeze({
 });
 
 export class SimulationState {
-    constructor(particles) {
+    constructor(particles, environment) {
         this.particles = particles;
+        this.environment = environment;
     }
 }

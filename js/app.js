@@ -11,16 +11,15 @@ const app = async () => {
     let particles = [];
     let infectedRate = 0.01;
     let density = 25;
-    const environment = new Environment(1, 1); // unit box for now
     for (let i = 1; i < density; i++) {
         for (let j = 1; j < density; j++) {
             particles.push(new Particle(i / density, j / density,
                 Math.random() * 0.03 - 0.015, Math.random() * 0.03 - 0.015,
-                0.007, true, Math.random() < infectedRate ? AgentState.SICK : AgentState.HEALTHY,
-                environment));
+                0.007, true, Math.random() < infectedRate ? AgentState.SICK : AgentState.HEALTHY));
         }
     }
-    const state = new SimulationState(particles);
+    const environment = new Environment(1, 1); // unit box for now
+    const state = new SimulationState(particles, environment);
     const renderer = new Renderer(canvas, context, state);
     const controller = new Controller(state, renderer);
     controller.runSimulation();
