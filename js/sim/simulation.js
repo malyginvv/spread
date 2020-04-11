@@ -50,6 +50,7 @@ export default class Simulation {
             // process event
             if (event.type === EventType.PARTICLE_COLLISION) {
                 this.solver.solveParticleCollision(event.particleA, event.particleB);
+                this.solver.solveInteraction(event.particleA, event.particleB);
                 this.predict(event.particleA, limit);
                 this.predict(event.particleB, limit);
             } else if (event.type === EventType.COLLISION_WITH_WALL) {

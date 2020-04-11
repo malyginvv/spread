@@ -31,14 +31,6 @@ export default class Solver {
             particleB.velocityY -= multiplier * forceY;
         }
 
-        // TODO: infection
-        if (particleA.state === AgentState.SICK) {
-            particleB.state = AgentState.SICK;
-        }
-        if (particleB.state === AgentState.SICK) {
-            particleA.state = AgentState.SICK;
-        }
-
         // update counts
         particleA.count++;
         particleB.count++;
@@ -52,5 +44,14 @@ export default class Solver {
     solveParticleOnHorizontalWallCollision(particle) {
         particle.velocityY = -particle.velocityY;
         particle.count++;
+    }
+
+    solveInteraction(particleA, particleB) {
+        if (particleA.state === AgentState.SICK) {
+            particleB.state = AgentState.SICK;
+        }
+        if (particleB.state === AgentState.SICK) {
+            particleA.state = AgentState.SICK;
+        }
     }
 }
