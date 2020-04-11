@@ -1,6 +1,7 @@
 import PriorityQueue from "./priority-queue.js";
 import {CollisionWithWall, EventType, ParticleCollision, Redraw} from './event.js'
 import Predictor from "./predictor.js";
+import Solver from "./solver.js";
 
 const FPS = 60;
 /**
@@ -15,6 +16,7 @@ export default class Simulation {
         this.time = 0.0;
         this.pq = new PriorityQueue();
         this.predictor = new Predictor(state.environment);
+        this.solver = new Solver();
     }
 
     init(limit) {
@@ -47,14 +49,14 @@ export default class Simulation {
 
             // process event
             if (event.type === EventType.PARTICLE_COLLISION) {
-                event.particleA.bounceOff(event.particleB);
+                this.solver.solveParticleCollision(event.particleA, event.particleB);
                 this.predict(event.particleA, limit);
                 this.predict(event.particleB, limit);
             } else if (event.type === EventType.COLLISION_WITH_WALL) {
                 if (event.vertical) {
-                    event.particle.bounceOffVerticalWall();
+                    this.solver.solveParticleOnVerticalWallCollision(event.particle);
                 } else {
-                    event.particle.bounceOffHorizontalWall();
+                    this.solver.solveParticleOnHorizontalWallCollision(event.particle);
                 }
                 this.predict(event.particle, limit);
             } else if (event.type === EventType.REDRAW) {
