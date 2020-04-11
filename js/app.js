@@ -10,12 +10,14 @@ const app = async () => {
 
     let particles = [];
     let infectedRate = 0.01;
+    let movableRate = 0.75;
     let density = 25;
     for (let i = 1; i < density; i++) {
         for (let j = 1; j < density; j++) {
+            let movable = Math.random() < movableRate;
             particles.push(new Particle(i / density, j / density,
-                Math.random() * 0.03 - 0.015, Math.random() * 0.03 - 0.015,
-                0.007, true, Math.random() < infectedRate ? AgentState.SICK : AgentState.HEALTHY));
+                movable ? Math.random() * 0.03 - 0.015 : 0, movable ? Math.random() * 0.03 - 0.015 : 0,
+                0.007, movable, Math.random() < infectedRate ? AgentState.SICK : AgentState.HEALTHY));
         }
     }
     const environment = new Environment(1, 1); // unit box for now

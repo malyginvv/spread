@@ -14,15 +14,22 @@ export default class Solver {
         let distance = particleA.radius + particleB.radius;
         let magnitude = dv / distance;
 
-        // force
+        // force, assuming all particles have the same mass
         let forceX = magnitude * deltaX / distance;
         let forceY = magnitude * deltaY / distance;
 
-        // TODO: immovable particles
-        particleA.velocityX += forceX;
-        particleA.velocityY += forceY;
-        particleB.velocityX -= forceX;
-        particleB.velocityY -= forceY;
+        if (particleA.movable) {
+            // if particle B is immovable then it cannot change its velocity, so all the momentum must stay with particle A
+            let multiplier = particleB.movable ? 1 : 2;
+            particleA.velocityX += multiplier * forceX;
+            particleA.velocityY += multiplier * forceY;
+        }
+        if (particleB.movable) {
+            // same as above
+            let multiplier = particleA.movable ? 1 : 2;
+            particleB.velocityX -= multiplier * forceX;
+            particleB.velocityY -= multiplier * forceY;
+        }
 
         // TODO: infection
         if (particleA.state === AgentState.SICK) {

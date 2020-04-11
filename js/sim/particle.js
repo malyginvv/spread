@@ -25,7 +25,9 @@ export default class Particle {
      * @param  dt the amount of time
      */
     move(dt) {
-        this.positionX += this.velocityX * dt;
-        this.positionY += this.velocityY * dt;
+        if (this.movable) {
+            this.positionX += this.velocityX * dt;
+            this.positionY += this.velocityY * dt;
+        }
     }
 }
