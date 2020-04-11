@@ -3,6 +3,7 @@ import Particle from './sim/particle.js';
 import {AgentState, SimulationState} from './sim/state.js';
 import Controller from './controller.js';
 import Environment from "./sim/environment.js";
+import simulationParameters from "./sim/parameters.js";
 
 const app = async () => {
     let canvas = document.getElementById('simulation');
@@ -20,6 +21,7 @@ const app = async () => {
                 0.007, movable, Math.random() < infectedRate ? AgentState.SICK : AgentState.HEALTHY));
         }
     }
+    simulationParameters.infectionProbability = 0.5;
     const environment = new Environment(1, 1); // unit box for now
     const state = new SimulationState(particles, environment);
     const renderer = new Renderer(canvas, context, state);

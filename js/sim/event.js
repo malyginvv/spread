@@ -1,7 +1,8 @@
 export const EventType = Object.freeze({
     COLLISION_WITH_WALL: Symbol('CollisionWithWall'),
     PARTICLE_COLLISION: Symbol('ParticleCollision'),
-    REDRAW: Symbol('Redraw')
+    REDRAW: Symbol('Redraw'),
+    RECOVERY: Symbol('Recovery')
 });
 
 class SimulationEvent {
@@ -52,5 +53,12 @@ export class ParticleCollision extends SimulationEvent {
 export class Redraw extends SimulationEvent {
     constructor(time) {
         super(time, EventType.REDRAW);
+    }
+}
+
+export class Recovery extends SimulationEvent {
+    constructor(time, particle) {
+        super(time, EventType.RECOVERY);
+        this.particle = particle;
     }
 }

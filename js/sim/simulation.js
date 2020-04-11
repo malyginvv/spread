@@ -50,7 +50,11 @@ export default class Simulation {
             // process event
             if (event.type === EventType.PARTICLE_COLLISION) {
                 this.solver.solveParticleCollision(event.particleA, event.particleB);
-                this.solver.solveInteraction(event.particleA, event.particleB);
+                // particle interaction can produce new events
+                let events = this.solver.solveInteraction(event.particleA, event.particleB, this.time);
+                for (let e of events) {
+                    this.pq.insert(e);
+                }
                 this.predict(event.particleA, limit);
                 this.predict(event.particleB, limit);
             } else if (event.type === EventType.COLLISION_WITH_WALL) {
@@ -60,6 +64,8 @@ export default class Simulation {
                     this.solver.solveParticleOnHorizontalWallCollision(event.particle);
                 }
                 this.predict(event.particle, limit);
+            } else if (event.type === EventType.RECOVERY) {
+                this.solver.solveRecovery(event.particle);
             } else if (event.type === EventType.REDRAW) {
                 this.redraw(limit);
                 return;

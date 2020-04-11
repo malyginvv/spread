@@ -1,4 +1,6 @@
 import {AgentState} from "./state.js";
+import simulationParameters from "./parameters.js";
+import {Recovery} from "./event.js";
 
 /**
  * Solves collisions and state changes.
@@ -46,12 +48,29 @@ export default class Solver {
         particle.count++;
     }
 
-    solveInteraction(particleA, particleB) {
-        if (particleA.state === AgentState.SICK) {
-            particleB.state = AgentState.SICK;
+    solveInteraction(particleA, particleB, time) {
+        let events = [];
+        let possibleEvent = this._solveInteraction(particleA, particleB, time);
+        if (possibleEvent) {
+            events.push(possibleEvent);
         }
-        if (particleB.state === AgentState.SICK) {
-            particleA.state = AgentState.SICK;
+        possibleEvent = this._solveInteraction(particleB, particleA, time);
+        if (possibleEvent) {
+            events.push(possibleEvent);
         }
+        return events;
+    }
+
+    _solveInteraction(particle, anotherParticle, time) {
+        if (particle.state === AgentState.SICK && anotherParticle.state === AgentState.HEALTHY) {
+            if (Math.random() < simulationParameters.infectionProbability) {
+                anotherParticle.state = AgentState.SICK;
+                return new Recovery(time + simulationParameters.diseaseDuration, anotherParticle);
+            }
+        }
+    }
+
+    solveRecovery(particle) {
+        particle.state = AgentState.IMMUNE;
     }
 }
