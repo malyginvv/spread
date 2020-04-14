@@ -14,5 +14,14 @@ export class SimulationState {
     constructor(particles, environment) {
         this.particles = particles;
         this.environment = environment;
+        this.log = [];
+    }
+
+    addLogEntry(entry) {
+        this.log.push(entry);
+    }
+
+    peekLogEntry() {
+        return this.log[this.log.length - 1];
     }
 }
