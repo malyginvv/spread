@@ -22,6 +22,8 @@ export class Renderer {
 
 }
 
+const LOG_HEIGHT = 100;
+
 export class LogRenderer {
     constructor(context, state) {
         this.context = context;
@@ -31,13 +33,17 @@ export class LogRenderer {
     render() {
         let column = this.state.log.length - 1;
         let logEntry = this.state.peekLogEntry();
-        this.context.fillStyle = AgentState.HEALTHY.color;
-        let healthyHeight = 40 * logEntry.healthy / logEntry.total;
-        this.context.fillRect(column, 0, 1, healthyHeight);
-        this.context.fillStyle = AgentState.SICK.color;
-        let sickHeight = 40 * logEntry.sick / logEntry.total;
-        this.context.fillRect(column, healthyHeight, 1, sickHeight);
+        // from top to bottom: immune, healthy, sick
+        let immuneHeight = LOG_HEIGHT * logEntry.immune / logEntry.total;
         this.context.fillStyle = AgentState.IMMUNE.color;
-        this.context.fillRect(column, healthyHeight + sickHeight, 1, 40 * logEntry.immune / logEntry.total);
+        this.context.fillRect(column, 0, 1, immuneHeight);
+
+        let healthyHeight = LOG_HEIGHT * logEntry.healthy / logEntry.total;
+        this.context.fillStyle = AgentState.HEALTHY.color;
+        this.context.fillRect(column, immuneHeight, 1, healthyHeight);
+
+        let sickHeight = LOG_HEIGHT * logEntry.sick / logEntry.total;
+        this.context.fillStyle = AgentState.SICK.color;
+        this.context.fillRect(column, immuneHeight + healthyHeight, 1, sickHeight);
     }
 }
