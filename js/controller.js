@@ -2,7 +2,8 @@ import Simulation from "./sim/simulation.js";
 import {AgentState} from "./sim/state.js";
 import SimulationLogEntry from "./sim/log.js";
 
-const LOG_UPDATE_TIME = 100;
+const SIM_LENGTH = 20000;
+const LOG_UPDATE_TIME = SIM_LENGTH / 600;
 
 export default class Controller {
     constructor(state, renderer, logRenderer) {
@@ -10,6 +11,7 @@ export default class Controller {
         this.renderer = renderer;
         this.logRenderer = logRenderer;
         this.lastTimestamp = 0;
+        this.started = 0;
         this.step = this.step.bind(this);
     }
 
@@ -20,13 +22,23 @@ export default class Controller {
     }
 
     step(timestamp) {
+        if (!this.started) {
+            this.started = timestamp;
+        }
+
+        // main loop
         this.simulation.step(10000);
+        this.renderer.render();
+        // update log if needed
         if (timestamp - this.lastTimestamp > LOG_UPDATE_TIME) {
             this.lastTimestamp = timestamp;
             this._addAndRenderLogEntry();
         }
-        this.renderer.render();
-        window.requestAnimationFrame(this.step);
+
+        // request next frame if sim time not exceeded
+        if (timestamp - this.started < SIM_LENGTH) {
+            window.requestAnimationFrame(this.step);
+        }
     }
 
     _addAndRenderLogEntry() {
