@@ -1,3 +1,17 @@
 canvas {
     border: 1px solid black;
 }
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.content {
+    width: 800px;
+    margin: auto;
+}
+
+canvas {
+    display: block;
+    margin: auto auto 1em;
+}
