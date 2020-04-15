@@ -6,22 +6,31 @@ const SIM_LENGTH = 20000;
 const LOG_UPDATE_TIME = SIM_LENGTH / 600;
 
 export default class Controller {
-    constructor(state, renderer, logRenderer) {
+    constructor(state, renderer, logRenderer, buttonRun, buttonReset) {
         this.state = state;
         this.renderer = renderer;
         this.logRenderer = logRenderer;
+        this.buttonRun = buttonRun;
+        this.buttonReset = buttonReset;
         this.lastTimestamp = 0;
         this.started = 0;
-        this.step = this.step.bind(this);
+        this.simulation = new Simulation(state);
+        this._step = this._step.bind(this);
+    }
+
+    prepareSimulation() {
+        this.state.initGrid();
+        this.renderer.render();
     }
 
     runSimulation() {
-        this.simulation = new Simulation(this.state);
+        this.buttonRun.disabled = true;
+        this.buttonReset.disabled = true;
         this.simulation.init(10000);
-        window.requestAnimationFrame(this.step);
+        window.requestAnimationFrame(this._step);
     }
 
-    step(timestamp) {
+    _step(timestamp) {
         if (!this.started) {
             this.started = timestamp;
         }
@@ -37,8 +46,15 @@ export default class Controller {
 
         // request next frame if sim time not exceeded
         if (timestamp - this.started < SIM_LENGTH) {
-            window.requestAnimationFrame(this.step);
+            window.requestAnimationFrame(this._step);
+        } else {
+            this._onSimulationEnd();
         }
+    }
+
+    _onSimulationEnd() {
+        this.buttonRun.disabled = false;
+        this.buttonReset.disabled = false;
     }
 
     _addAndRenderLogEntry() {

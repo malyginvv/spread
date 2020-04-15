@@ -15,3 +15,22 @@ canvas {
     display: block;
     margin: auto auto 1em;
 }
+
+#control-buttons {
+    width: 600px;
+    margin: auto;
+    clear: both;
+}
+
+#button-run {
+    float: left;
+}
+
+#button-reset {
+    float: right
+}
+
+input[type='button'] {
+    width: 100px;
+    margin-bottom: 2em;
+}

@@ -103,4 +103,9 @@ export default class PriorityQueue {
     isEmpty() {
         return this.n === 0;
     }
+
+    clear() {
+        this.n = 0;
+        this.queue.length = 0;
+    }
 }

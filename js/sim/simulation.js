@@ -20,6 +20,10 @@ export default class Simulation {
     }
 
     init(limit) {
+        // reset clock
+        this.time = 0.0;
+        // clear events
+        this.pq.clear();
         // initialize PQ with collision events for every pair of two particles
         for (let particle of this.state.particles) {
             this.predict(particle, limit);
