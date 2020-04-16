@@ -31,8 +31,13 @@ export class LogRenderer {
     }
 
     render() {
-        let column = this.state.log.length - 1;
         let logEntry = this.state.peekLogEntry();
+        if (!logEntry) {
+            this.context.fillStyle = 'rgb(255,255,255)';
+            this.context.fillRect(0, 0, 600, LOG_HEIGHT);
+            return;
+        }
+        let column = this.state.log.length - 1;
         // from top to bottom: immune, healthy, sick
         let immuneHeight = LOG_HEIGHT * logEntry.immune / logEntry.total;
         this.context.fillStyle = AgentState.IMMUNE.color;

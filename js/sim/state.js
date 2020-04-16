@@ -20,6 +20,7 @@ export class SimulationState {
     }
 
     initGrid() {
+        this.log = [];
         this.particles = [];
         let infectedRate = 0.01;
         let movableRate = 0.85;
