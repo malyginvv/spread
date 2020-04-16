@@ -2,6 +2,7 @@ import {LogRenderer, Renderer} from './renderer.js'
 import {SimulationState} from './sim/state.js';
 import Controller from './controller.js';
 import Environment from "./sim/environment.js";
+import SettingsController from "./settings.js";
 
 const app = async () => {
     let canvas = document.getElementById('simulation');
@@ -11,6 +12,9 @@ const app = async () => {
 
     let buttonRun = document.getElementById('button-run');
     let buttonReset = document.getElementById('button-reset');
+
+    let settingsController = new SettingsController();
+    settingsController.updateSettings();
 
     const environment = new Environment(1, 1); // unit box for now
     const state = new SimulationState(environment);

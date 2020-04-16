@@ -16,9 +16,12 @@ canvas {
     margin: auto auto 1em;
 }
 
-#control-buttons {
+.centered {
     width: 600px;
     margin: auto;
+}
+
+#control-buttons {
     clear: both;
 }
 
@@ -33,4 +36,47 @@ canvas {
 input[type='button'] {
     width: 100px;
     margin-bottom: 2em;
+}
+
+.control {
+    display: table;
+    height: 40px;
+    vertical-align: middle;
+}
+
+.range-label {
+    display: table-cell;
+    text-align: left;
+    width: 220px;
+    vertical-align: middle;
+}
+
+.range-value {
+    display: table-cell;
+    text-align: left;
+    width: 30px;
+    vertical-align: middle;
+}
+
+.range-label-start {
+    display: table-cell;
+    text-align: right;
+    width: 30px;
+    vertical-align: middle;
+}
+
+.range-label-end {
+    display: table-cell;
+    text-align: left;
+    width: 30px;
+    vertical-align: middle;
+}
+
+.range {
+    display: table-cell;
+    height: 38px;
+    margin: 0 1em;
+    padding: 0;
+    width: 260px;
+    vertical-align: middle;
 }

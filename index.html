@@ -23,8 +23,17 @@
         <li>Другая часть населения свободно перемещается.</li>
         <li>В начале симуляции болеет заданная часть населения.</li>
         <li>Больной человек заражает здорового при контакте с заданной вероятностью.</li>
-        <li>Больной может умереть с заданной вероятнотстью. Этот параметр называется летальность.</li>
+        <li>Больной может умереть с заданной вероятностью. Этот параметр называется летальность.</li>
     </ol>
+    <div class="centered">
+        <div class="control">
+            <label class="range-label" for="range-isolation">На самоизоляции:</label>
+            <span id="isolation-value" class="range-value">50%</span>
+            <span class="range-label-start">0%</span>
+            <input id="range-isolation" class="range" type="range" min="0" max="99">
+            <span class="range-label-end">99%</span>
+        </div>
+    </div>
     <canvas id="simulation-log" width="600" height="100">
     </canvas>
     <canvas id="simulation" width="600" height="600">
