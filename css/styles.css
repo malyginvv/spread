@@ -68,7 +68,7 @@ input[type='button'] {
 .range-label-end {
     display: table-cell;
     text-align: left;
-    width: 30px;
+    width: 40px;
     vertical-align: middle;
 }
 

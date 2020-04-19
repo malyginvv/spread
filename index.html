@@ -19,9 +19,8 @@
     <ol>
         <li>Имеется ограниченная территория в виде квадрата.</li>
         <li>Население представлено в виде кружков.</li>
-        <li>Часть населения находится на самоизоляции и не движется.</li>
-        <li>Другая часть населения свободно перемещается.</li>
-        <li>В начале симуляции болеет заданная часть населения.</li>
+        <li>Часть населения находится на самоизоляции и не движется, остальные свободно перемещается</li>
+        <li>В начале симуляции болеет часть населения.</li>
         <li>Больной человек заражает здорового при контакте с заданной вероятностью.</li>
         <li>Больной может умереть с заданной вероятностью. Этот параметр называется летальность.</li>
     </ol>
@@ -30,7 +29,14 @@
             <label class="range-label" for="range-isolation">На самоизоляции:</label>
             <span id="isolation-value" class="range-value">50%</span>
             <span class="range-label-start">0%</span>
-            <input id="range-isolation" class="range" type="range" min="0" max="99">
+            <input id="range-isolation" class="range" type="range" min="0" max="99" value="50">
+            <span class="range-label-end">99%</span>
+        </div>
+        <div class="control">
+            <label class="range-label" for="range-sick">Заболевшие:</label>
+            <span id="sick-value" class="range-value">1%</span>
+            <span class="range-label-start">1%</span>
+            <input id="range-sick" class="range" type="range" min="1" max="99" value="1">
             <span class="range-label-end">99%</span>
         </div>
     </div>

@@ -13,15 +13,14 @@ const app = async () => {
     let buttonRun = document.getElementById('button-run');
     let buttonReset = document.getElementById('button-reset');
 
-    let settingsController = new SettingsController();
-    settingsController.updateSettings();
-
     const environment = new Environment(1, 1); // unit box for now
     const state = new SimulationState(environment);
     const renderer = new Renderer(context, state);
     const logRenderer = new LogRenderer(logContext, state);
     const controller = new Controller(state, renderer, logRenderer, buttonRun, buttonReset);
     controller.prepareSimulation();
+    const settingsController = new SettingsController(controller);
+    settingsController.updateSettings();
 
     buttonRun.addEventListener('click', () => {
         controller.runSimulation();

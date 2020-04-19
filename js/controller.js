@@ -14,23 +14,34 @@ export default class Controller {
         this.buttonReset = buttonReset;
         this.lastTimestamp = 0;
         this.started = 0;
-        this.firstRun = true;
+        this.ready = false;
         this.simulation = new Simulation(state);
         this._step = this._step.bind(this);
     }
 
     prepareSimulation() {
-        this.started = 0;
-        this.lastTimestamp = 0;
-        this.state.initGrid();
+        if (!this.ready) {
+            this.state.initGrid();
+            this.ready = true;
+        }
         this.renderer.render();
         this.logRenderer.render();
     }
 
+    onIsolationRateChange() {
+        this.state.changeIsolationRate();
+        this.renderer.render();
+    }
+
+    onSickRateChange() {
+        this.state.changeSickRate();
+        this.renderer.render();
+    }
+
     runSimulation() {
-        if (!this.firstRun) {
-            this.prepareSimulation();
-        }
+        this.prepareSimulation();
+        this.started = 0;
+        this.lastTimestamp = 0;
         this.buttonRun.disabled = true;
         this.buttonReset.disabled = true;
         this.simulation.init(10000);
@@ -60,10 +71,10 @@ export default class Controller {
     }
 
     _onSimulationEnd() {
-        this.firstRun = false;
         this.buttonRun.value = 'Повторить';
         this.buttonRun.disabled = false;
         this.buttonReset.disabled = false;
+        this.ready = false;
     }
 
     _addAndRenderLogEntry() {
