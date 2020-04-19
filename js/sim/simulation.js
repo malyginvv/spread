@@ -27,6 +27,10 @@ export default class Simulation {
         // initialize PQ with collision events for every pair of two particles
         for (let particle of this.state.particles) {
             this.predict(particle, limit);
+            let event = this.solver.solveInitiallySick(particle);
+            if (event) {
+                this.pq.insert(event);
+            }
         }
         this.pq.insert(new Redraw(0));
     }

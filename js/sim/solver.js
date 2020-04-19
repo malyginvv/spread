@@ -70,6 +70,12 @@ export default class Solver {
         }
     }
 
+    solveInitiallySick(particle) {
+        if (particle.state === AgentState.SICK) {
+            return new Recovery(simulationParameters.diseaseDuration, particle);
+        }
+    }
+
     solveRecovery(particle) {
         particle.state = AgentState.IMMUNE;
     }
