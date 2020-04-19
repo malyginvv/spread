@@ -65,14 +65,18 @@ export default class Solver {
         if (particle.state === AgentState.SICK && anotherParticle.state === AgentState.HEALTHY) {
             if (Math.random() < simulationParameters.infectionProbability) {
                 anotherParticle.state = AgentState.SICK;
-                return new Recovery(time + simulationParameters.diseaseDuration, anotherParticle);
+                return new Recovery(time + this._getRandomDuration(), anotherParticle);
             }
         }
     }
 
+    _getRandomDuration() {
+        return simulationParameters.diseaseDuration + (Math.random() - 0.5) * simulationParameters.diseaseDuration / 10;
+    }
+
     solveInitiallySick(particle) {
         if (particle.state === AgentState.SICK) {
-            return new Recovery(simulationParameters.diseaseDuration, particle);
+            return new Recovery(this._getRandomDuration(), particle);
         }
     }
 
