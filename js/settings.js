@@ -1,4 +1,5 @@
 import simulationParameters from "./sim/parameters.js";
+import {SIM_LENGTH} from "./controller.js";
 
 export default class SettingsController {
     constructor(controller) {
@@ -9,13 +10,17 @@ export default class SettingsController {
         this.sickValue = document.getElementById('sick-value');
         this.rangeInfection = document.getElementById('range-infection');
         this.infectionValue = document.getElementById('infection-value');
+        this.rangeDuration = document.getElementById('range-duration');
+        this.durationValue = document.getElementById('duration-value');
 
         this.onIsolationInput = this.onIsolationInput.bind(this);
         this.onSickInput = this.onSickInput.bind(this);
         this.onInfectionInput = this.onInfectionInput.bind(this);
+        this.onDurationInput = this.onDurationInput.bind(this);
         this.rangeIsolation.addEventListener('input', this.onIsolationInput);
         this.rangeSick.addEventListener('input', this.onSickInput);
         this.rangeInfection.addEventListener('input', this.onInfectionInput);
+        this.rangeDuration.addEventListener('input', this.onDurationInput);
     }
 
     updateSettings() {
@@ -28,6 +33,9 @@ export default class SettingsController {
         let infectionRate = simulationParameters.infectionProbability * 100;
         this.infectionValue.innerText = infectionRate + '%';
         this.rangeInfection.value = infectionRate;
+        let durationPercent = simulationParameters.diseaseDuration * 100000 / SIM_LENGTH;
+        this.durationValue.innerText = durationPercent + '%';
+        this.rangeDuration.value = durationPercent;
     }
 
     onIsolationInput(event) {
@@ -50,13 +58,23 @@ export default class SettingsController {
         simulationParameters.infectionProbability = value / 100;
     }
 
+    onDurationInput(event) {
+        let value = event.target.value;
+        this.durationValue.innerText = value + '%';
+        simulationParameters.diseaseDuration = SIM_LENGTH * value / 100000;
+    }
+
     disableControls() {
         this.rangeIsolation.disabled = true;
         this.rangeSick.disabled = true;
+        this.rangeInfection.disabled = true;
+        this.rangeDuration.disabled = true;
     }
 
     enableControls() {
         this.rangeIsolation.disabled = false;
         this.rangeSick.disabled = false;
+        this.rangeInfection.disabled = false;
+        this.rangeDuration.disabled = false;
     }
 }

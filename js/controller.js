@@ -2,7 +2,7 @@ import Simulation from "./sim/simulation.js";
 import {AgentState} from "./sim/state.js";
 import SimulationLogEntry from "./sim/log.js";
 
-const SIM_LENGTH = 20000;
+export const SIM_LENGTH = 20000;
 const LOG_UPDATE_TIME = SIM_LENGTH / 600;
 
 export default class Controller {
