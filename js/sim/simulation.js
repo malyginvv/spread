@@ -10,8 +10,9 @@ const FPS = 60;
  */
 export default class Simulation {
 
-    constructor(state) {
+    constructor(state, limit) {
         this.state = state;
+        this.limit = limit;
         // simulation clock time
         this.time = 0.0;
         this.pq = new PriorityQueue();
@@ -19,14 +20,14 @@ export default class Simulation {
         this.solver = new Solver();
     }
 
-    init(limit) {
+    init() {
         // reset clock
         this.time = 0.0;
         // clear events
         this.pq.clear();
         // initialize PQ with collision events for every pair of two particles
         for (let particle of this.state.particles) {
-            this.predict(particle, limit);
+            this.predict(particle);
             let event = this.solver.solveInitiallySick(particle);
             if (event) {
                 this.pq.insert(event);
@@ -37,10 +38,8 @@ export default class Simulation {
 
     /**
      * Simulates the system of particles for the specified amount of time.
-     *
-     * @param  limit the amount of time
      */
-    step(limit) {
+    step() {
         // the main event-driven simulation loop
         while (!this.pq.isEmpty()) {
             // get impending event, discard if invalidated
@@ -63,31 +62,31 @@ export default class Simulation {
                 for (let e of events) {
                     this.pq.insert(e);
                 }
-                this.predict(event.particleA, limit);
-                this.predict(event.particleB, limit);
+                this.predict(event.particleA);
+                this.predict(event.particleB);
             } else if (event.type === EventType.COLLISION_WITH_WALL) {
                 if (event.vertical) {
                     this.solver.solveParticleOnVerticalWallCollision(event.particle);
                 } else {
                     this.solver.solveParticleOnHorizontalWallCollision(event.particle);
                 }
-                this.predict(event.particle, limit);
+                this.predict(event.particle);
             } else if (event.type === EventType.RECOVERY) {
                 this.solver.solveRecovery(event.particle);
             } else if (event.type === EventType.REDRAW) {
-                this.redraw(limit);
+                this.redraw();
                 return;
             }
         }
     }
 
     // updates priority queue with all new events for a particle
-    predict(particle, limit) {
+    predict(particle) {
         // particle-particle collisions
         for (let otherParticle of this.state.particles) {
             let dt = this.predictor.timeToHit(particle, otherParticle);
             let collisionTime = this.time + dt;
-            if (collisionTime <= limit) {
+            if (collisionTime <= this.limit) {
                 this.pq.insert(new ParticleCollision(collisionTime, particle, otherParticle));
             }
         }
@@ -95,16 +94,16 @@ export default class Simulation {
         // particle-wall collisions
         let dtX = this.predictor.timeToHitVerticalWall(particle);
         let dtY = this.predictor.timeToHitHorizontalWall(particle);
-        if (this.time + dtX <= limit) {
+        if (this.time + dtX <= this.limit) {
             this.pq.insert(new CollisionWithWall(this.time + dtX, particle, true));
         }
-        if (this.time + dtY <= limit) {
+        if (this.time + dtY <= this.limit) {
             this.pq.insert(new CollisionWithWall(this.time + dtY, particle, false));
         }
     }
 
-    redraw(limit) {
-        if (this.time < limit) {
+    redraw() {
+        if (this.time < this.limit) {
             this.pq.insert(new Redraw(this.time + 1.0 / FPS));
         }
     }

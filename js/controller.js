@@ -15,7 +15,7 @@ export default class Controller {
         this.lastTimestamp = 0;
         this.started = 0;
         this.ready = false;
-        this.simulation = new Simulation(state);
+        this.simulation = new Simulation(state, SIM_LENGTH / 1000);
         this._step = this._step.bind(this);
     }
 
