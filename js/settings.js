@@ -36,4 +36,14 @@ export default class SettingsController {
         simulationParameters.sickRate = value / 100;
         this.controller.onSickRateChange();
     }
+
+    disableControls() {
+        this.rangeIsolation.disabled = true;
+        this.rangeSick.disabled = true;
+    }
+
+    enableControls() {
+        this.rangeIsolation.disabled = false;
+        this.rangeSick.disabled = false;
+    }
 }

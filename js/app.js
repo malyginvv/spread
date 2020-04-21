@@ -23,9 +23,11 @@ const app = async () => {
     settingsController.updateSettings();
 
     buttonRun.addEventListener('click', () => {
+        settingsController.disableControls();
         controller.runSimulation();
     });
     buttonReset.addEventListener('click', () => {
+        settingsController.enableControls();
         controller.prepareSimulation();
     })
 };
