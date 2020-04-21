@@ -15,6 +15,7 @@ export const AgentState = Object.freeze({
 
 const MIN_VELOCITY = 0.03;
 const MAX_VELOCITY = 0.09;
+const RADIUS = 0.007;
 
 export class SimulationState {
     constructor(environment) {
@@ -27,10 +28,12 @@ export class SimulationState {
         this.log = [];
         this.particles = [];
         let density = 25;
+        let offsetLimit = 0.5 / density - RADIUS;
         for (let i = 1; i < density; i++) {
             for (let j = 1; j < density; j++) {
-                this.particles.push(new Particle(i / density, j / density,
-                    0, 0, 0.007, false, AgentState.HEALTHY));
+                this.particles.push(new Particle(i / density + (Math.random() - 0.5) * offsetLimit,
+                    j / density + (Math.random() - 0.5) * offsetLimit,
+                    0, 0, RADIUS, false, AgentState.HEALTHY));
             }
         }
         this.changeIsolationRate();
