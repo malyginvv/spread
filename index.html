@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Симуляция распространения болезни</title>
     <meta name="description" content="Симуляция распространения болезни">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="css/styles.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
@@ -26,32 +27,40 @@
     </ol>
     <div class="centered">
         <div class="control">
-            <label class="range-label" for="range-isolation">На самоизоляции:</label>
-            <span id="isolation-value" class="range-value">50%</span>
-            <span class="range-label-start">0%</span>
-            <input id="range-isolation" class="range" type="range" min="0" max="100" value="50">
-            <span class="range-label-end">100%</span>
+            <div class="label-block">
+                <label class="range-label" for="range-isolation">На самоизоляции:</label>
+            </div>
+            <div class="range-block">
+                <span id="isolation-value" class="range-value">50%</span>
+                <input id="range-isolation" class="range-slider" type="range" min="0" max="100" value="50">
+            </div>
         </div>
         <div class="control">
-            <label class="range-label" for="range-sick">Заболевшие:</label>
-            <span id="sick-value" class="range-value">1%</span>
-            <span class="range-label-start">1%</span>
-            <input id="range-sick" class="range" type="range" min="1" max="100" value="1">
-            <span class="range-label-end">100%</span>
+            <div class="label-block">
+                <label class="range-label" for="range-sick">Заболевшие:</label>
+            </div>
+            <div class="range-block">
+                <span id="sick-value" class="range-value">1%</span>
+                <input id="range-sick" class="range-slider" type="range" min="1" max="100" value="1">
+            </div>
         </div>
         <div class="control">
-            <label class="range-label" for="range-infection">Вероятность заражения:</label>
-            <span id="infection-value" class="range-value">1%</span>
-            <span class="range-label-start">1%</span>
-            <input id="range-infection" class="range" type="range" min="1" max="100" value="1">
-            <span class="range-label-end">100%</span>
+            <div class="label-block">
+                <label class="range-label" for="range-infection">Вероятность заражения:</label>
+            </div>
+            <div class="range-block">
+                <span id="infection-value" class="range-value">100%</span>
+                <input id="range-infection" class="range-slider" type="range" min="1" max="100" value="1">
+            </div>
         </div>
         <div class="control">
-            <label class="range-label" for="range-duration">Длительность болезни:</label>
-            <span id="duration-value" class="range-value">1%</span>
-            <span class="range-label-start">1%</span>
-            <input id="range-duration" class="range" type="range" min="1" max="100" value="1">
-            <span class="range-label-end">100%</span>
+            <div class="label-block">
+                <label class="range-label" for="range-duration">Длительность болезни:</label>
+            </div>
+            <div class="range-block">
+                <span id="duration-value" class="range-value">25%</span>
+                <input id="range-duration" class="range-slider" type="range" min="1" max="100" value="1">
+            </div>
         </div>
     </div>
     <canvas id="simulation-log" width="600" height="100">

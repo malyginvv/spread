@@ -2,23 +2,72 @@ canvas {
     border: 1px solid black;
 }
 
-body {
+html {
     font-family: 'Roboto', sans-serif;
+    font-size: 16px;
 }
 
-.content {
-    width: 800px;
-    margin: auto;
+@media screen and (min-width: 320px) {
+    html {
+        font-size: 4vw;
+    }
+
+    .centered {
+        width: 90%;
+        margin: 1em;
+    }
+
+    .content {
+        margin: 1em;
+    }
+
+    .label-block {
+        display: table-row;
+    }
+
+    .range-block {
+        display: table-row;
+        vertical-align: middle;
+    }
+
+    .range-slider {
+        width: 70%;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    html {
+        font-size: 18px;
+    }
+
+    .centered {
+        width: 600px;
+        margin: auto;
+    }
+
+    .content {
+        width: 800px;
+        margin: auto;
+    }
+
+    .label-block {
+        display: table-cell;
+        width: 35%;
+    }
+
+    .range-block {
+        display: table-cell;
+        width: 60%;
+    }
+
+    .range-slider {
+        width: 21em;
+    }
 }
 
 canvas {
     display: block;
     margin: auto auto 1em;
-}
-
-.centered {
-    width: 600px;
-    margin: auto;
 }
 
 #control-buttons {
@@ -34,49 +83,41 @@ canvas {
 }
 
 input[type='button'] {
+    font-size: 1vw;
     width: 100px;
     margin-bottom: 2em;
 }
 
 .control {
     display: table;
-    height: 40px;
+    width: 100%;
+    margin-bottom: 1em;
     vertical-align: middle;
 }
 
 .range-label {
-    display: table-cell;
     text-align: left;
-    width: 220px;
     vertical-align: middle;
 }
 
 .range-value {
-    display: table-cell;
-    text-align: left;
-    width: 30px;
+    display: inline-block;
+    color: #fff;
+    text-align: center;
+    border-radius: 0.5em;
+    background: #333b45;
+    padding: 0.2em 0.3em;
+    width: 3em;
     vertical-align: middle;
 }
 
-.range-label-start {
+.range-slider {
     display: table-cell;
-    text-align: right;
-    width: 30px;
-    vertical-align: middle;
-}
-
-.range-label-end {
-    display: table-cell;
-    text-align: left;
-    width: 40px;
-    vertical-align: middle;
-}
-
-.range {
-    display: table-cell;
-    height: 38px;
     margin: 0 1em;
-    padding: 0;
-    width: 260px;
     vertical-align: middle;
+    height: 2em;
+    border-radius: 1em;
+    background: #333b45;
+    outline: none;
+    -webkit-appearance: none;
 }

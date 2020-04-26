@@ -7,9 +7,9 @@ import simulationParameters from "./parameters.js";
  * @enum {{color: string}}
  */
 export const AgentState = Object.freeze({
-    HEALTHY: {color: '#178000'},
-    SICK: {color: '#806800'},
-    IMMUNE: {color: '#6a0080'},
+    HEALTHY: {color: '#e5ac00'},
+    SICK: {color: '#c90005'},
+    IMMUNE: {color: '#008082'},
     DECEASED: {color: '#262626'},
 });
 
