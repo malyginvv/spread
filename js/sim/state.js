@@ -10,7 +10,7 @@ export const AgentState = Object.freeze({
     HEALTHY: {color: '#e5ac00'},
     SICK: {color: '#c90005'},
     IMMUNE: {color: '#008082'},
-    DECEASED: {color: '#262626'},
+    DECEASED: {color: '#000000'},
 });
 
 const MIN_VELOCITY = 0.03;

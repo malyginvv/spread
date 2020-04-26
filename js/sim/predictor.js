@@ -1,3 +1,5 @@
+import {AgentState} from "./state.js";
+
 /**
  * Calculates particle-on-particle and particle-on-wall collision times.
  */
@@ -16,7 +18,8 @@ export default class Predictor {
      *         Number.POSITIVE_INFINITY if the particles will not collide
      */
     timeToHit(particleA, particleB) {
-        if (particleA === particleB || !particleA.movable && !particleB.movable) {
+        if (particleA === particleB || !particleA.movable && !particleB.movable
+            || particleA.state === AgentState.DECEASED || particleB.state === AgentState.DECEASED) {
             // a particle cannot collide with itself and two immovable particles cannot collide with each other
             return Number.POSITIVE_INFINITY;
         }

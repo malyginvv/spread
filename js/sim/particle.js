@@ -1,3 +1,5 @@
+const DEACTIVATION_ANIMATION_LENGTH = 2000;
+
 /**
  * Particle model.
  * Particle is a hard disc with known position, velocity, radius and state.
@@ -16,6 +18,7 @@ export default class Particle {
         this.movable = movable;
         this.state = state;
         this.count = 0;
+        this.deactivationTime = null;
     }
 
     /**
@@ -29,5 +32,13 @@ export default class Particle {
             this.positionX += this.velocityX * dt;
             this.positionY += this.velocityY * dt;
         }
+    }
+
+    drawable(time) {
+        return this.deactivationTime ? this.deactivationTime + DEACTIVATION_ANIMATION_LENGTH > time : true;
+    }
+
+    deactivationProgress(time) {
+        return this.deactivationTime ? (time - this.deactivationTime) / DEACTIVATION_ANIMATION_LENGTH : 0;
     }
 }

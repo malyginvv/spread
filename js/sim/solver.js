@@ -1,6 +1,6 @@
 import {AgentState} from "./state.js";
 import simulationParameters from "./parameters.js";
-import {Recovery} from "./event.js";
+import {Death, Recovery} from "./event.js";
 
 /**
  * Solves collisions and state changes.
@@ -49,25 +49,27 @@ export default class Solver {
     }
 
     solveInteraction(particleA, particleB, time) {
-        let events = [];
         let possibleEvent = this._solveInteraction(particleA, particleB, time);
         if (possibleEvent) {
-            events.push(possibleEvent);
+            return possibleEvent;
         }
-        possibleEvent = this._solveInteraction(particleB, particleA, time);
-        if (possibleEvent) {
-            events.push(possibleEvent);
-        }
-        return events;
+        return this._solveInteraction(particleB, particleA, time);
     }
 
     _solveInteraction(particle, anotherParticle, time) {
         if (particle.state === AgentState.SICK && anotherParticle.state === AgentState.HEALTHY) {
             if (Math.random() < simulationParameters.infectionProbability) {
                 anotherParticle.state = AgentState.SICK;
-                return new Recovery(time + this._getRandomDuration(), anotherParticle);
+                return this._solveOutcome(time, anotherParticle);
             }
         }
+    }
+
+    _solveOutcome(time, particle) {
+        if (Math.random() < simulationParameters.caseFatalityRate) {
+            return new Death(time + this._getRandomDuration(), particle);
+        }
+        return new Recovery(time + this._getRandomDuration(), particle);
     }
 
     _getRandomDuration() {
@@ -76,11 +78,20 @@ export default class Solver {
 
     solveInitiallySick(particle) {
         if (particle.state === AgentState.SICK) {
-            return new Recovery(this._getRandomDuration(), particle);
+            return this._solveOutcome(0, particle);
         }
     }
 
     solveRecovery(particle) {
         particle.state = AgentState.IMMUNE;
+    }
+
+    solveDeath(particle, time) {
+        particle.state = AgentState.DECEASED;
+        particle.movable = false;
+        particle.velocityX = 0;
+        particle.velocityY = 0;
+        particle.count = -1;
+        particle.deactivationTime = time * 1000;
     }
 }

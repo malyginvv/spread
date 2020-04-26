@@ -54,8 +54,9 @@ export default class Controller {
         }
 
         // main loop
-        this.simulation.step(10000);
-        this.renderer.render();
+        this.simulation.step();
+        let timePassed = timestamp - this.started;
+        this.renderer.render(timePassed);
         // update log if needed
         if (timestamp - this.lastTimestamp > LOG_UPDATE_TIME) {
             this.lastTimestamp = timestamp;
@@ -63,7 +64,7 @@ export default class Controller {
         }
 
         // request next frame if sim time not exceeded
-        if (timestamp - this.started < SIM_LENGTH) {
+        if (timePassed < SIM_LENGTH) {
             window.requestAnimationFrame(this._step);
         } else {
             this._onSimulationEnd();
@@ -81,6 +82,7 @@ export default class Controller {
         let healthy = 0;
         let sick = 0;
         let immune = 0;
+        let deceased = 0;
         for (let particle of this.state.particles) {
             if (particle.state === AgentState.HEALTHY) {
                 healthy++;
@@ -91,8 +93,11 @@ export default class Controller {
             if (particle.state === AgentState.IMMUNE) {
                 immune++;
             }
+            if (particle.state === AgentState.DECEASED) {
+                deceased++;
+            }
         }
-        this.state.addLogEntry(new SimulationLogEntry(healthy, sick, immune));
+        this.state.addLogEntry(new SimulationLogEntry(healthy, sick, immune, deceased));
         this.logRenderer.render();
     }
 }

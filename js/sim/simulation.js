@@ -13,7 +13,7 @@ export default class Simulation {
     constructor(state, limit) {
         this.state = state;
         this.limit = limit;
-        // simulation clock time
+        // simulation clock time in seconds
         this.time = 0.0;
         this.pq = new PriorityQueue();
         this.predictor = new Predictor(state.environment);
@@ -58,9 +58,9 @@ export default class Simulation {
             if (event.type === EventType.PARTICLE_COLLISION) {
                 this.solver.solveParticleCollision(event.particleA, event.particleB);
                 // particle interaction can produce new events
-                let events = this.solver.solveInteraction(event.particleA, event.particleB, this.time);
-                for (let e of events) {
-                    this.pq.insert(e);
+                let possibleEvent = this.solver.solveInteraction(event.particleA, event.particleB, this.time);
+                if (possibleEvent) {
+                    this.pq.insert(possibleEvent);
                 }
                 this.predict(event.particleA);
                 this.predict(event.particleB);
@@ -73,6 +73,8 @@ export default class Simulation {
                 this.predict(event.particle);
             } else if (event.type === EventType.RECOVERY) {
                 this.solver.solveRecovery(event.particle);
+            } else if (event.type === EventType.DEATH) {
+                this.solver.solveDeath(event.particle, this.time);
             } else if (event.type === EventType.REDRAW) {
                 this.redraw();
                 return;
