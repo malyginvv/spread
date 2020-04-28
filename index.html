@@ -55,11 +55,22 @@
         </div>
         <div class="control">
             <div class="label-block">
-                <label class="range-label" for="range-duration">Длительность болезни:</label>
+                <label class="range-label" for="range-duration"><abbr
+                        title="Средняя длительность в % от общего времени симуляции">Длительность</abbr>
+                    болезни:</label>
             </div>
             <div class="range-block">
                 <span id="duration-value" class="range-value">25%</span>
                 <input id="range-duration" class="range-slider" type="range" min="1" max="100" value="1">
+            </div>
+        </div>
+        <div class="control">
+            <div class="label-block">
+                <label class="range-label" for="range-cfr">Летальность:</label>
+            </div>
+            <div class="range-block">
+                <span id="cfr-value" class="range-value">1%</span>
+                <input id="range-cfr" class="range-slider" type="range" min="0" max="100" value="1">
             </div>
         </div>
     </div>

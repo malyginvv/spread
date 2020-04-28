@@ -12,15 +12,19 @@ export default class SettingsController {
         this.infectionValue = document.getElementById('infection-value');
         this.rangeDuration = document.getElementById('range-duration');
         this.durationValue = document.getElementById('duration-value');
+        this.rangeCfr = document.getElementById('range-cfr');
+        this.cfrValue = document.getElementById('cfr-value');
 
         this.onIsolationInput = this.onIsolationInput.bind(this);
         this.onSickInput = this.onSickInput.bind(this);
         this.onInfectionInput = this.onInfectionInput.bind(this);
         this.onDurationInput = this.onDurationInput.bind(this);
+        this.onCfrInput = this.onCfrInput.bind(this);
         this.rangeIsolation.addEventListener('input', this.onIsolationInput);
         this.rangeSick.addEventListener('input', this.onSickInput);
         this.rangeInfection.addEventListener('input', this.onInfectionInput);
         this.rangeDuration.addEventListener('input', this.onDurationInput);
+        this.rangeCfr.addEventListener('input', this.onCfrInput);
     }
 
     updateSettings() {
@@ -36,6 +40,9 @@ export default class SettingsController {
         let durationPercent = simulationParameters.diseaseDuration * 100000 / SIM_LENGTH;
         this.durationValue.innerText = durationPercent + '%';
         this.rangeDuration.value = durationPercent;
+        let caseFatalityRate = simulationParameters.caseFatalityRate * 100;
+        this.cfrValue.innerText = caseFatalityRate + '%';
+        this.rangeCfr.value = caseFatalityRate;
     }
 
     onIsolationInput(event) {
@@ -64,11 +71,18 @@ export default class SettingsController {
         simulationParameters.diseaseDuration = SIM_LENGTH * value / 100000;
     }
 
+    onCfrInput(event) {
+        let value = event.target.value;
+        this.cfrValue.innerText = value + '%';
+        simulationParameters.caseFatalityRate = value / 100;
+    }
+
     disableControls() {
         this.rangeIsolation.disabled = true;
         this.rangeSick.disabled = true;
         this.rangeInfection.disabled = true;
         this.rangeDuration.disabled = true;
+        this.rangeCfr.disabled = true;
     }
 
     enableControls() {
@@ -76,5 +90,6 @@ export default class SettingsController {
         this.rangeSick.disabled = false;
         this.rangeInfection.disabled = false;
         this.rangeDuration.disabled = false;
+        this.rangeCfr.disabled = false;
     }
 }

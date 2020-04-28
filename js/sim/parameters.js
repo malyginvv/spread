@@ -3,7 +3,7 @@ const simulationParameters = {
    diseaseDuration: 5,
    isolationRate: 0.5,
    sickRate: 0.01,
-   caseFatalityRate: 0.1
+   caseFatalityRate: 0.01
 };
 
 export default simulationParameters;
