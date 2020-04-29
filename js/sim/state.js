@@ -1,5 +1,6 @@
 import Particle from "./particle.js";
 import simulationParameters from "./parameters.js";
+import SimulationStats from "./stats.js";
 
 /**
  * Agent state.
@@ -17,14 +18,23 @@ const MIN_VELOCITY = 0.03;
 const MAX_VELOCITY = 0.09;
 const RADIUS = 0.007;
 
+/**
+ * State of the simulation and stats on current run.
+ */
 export class SimulationState {
     constructor(environment) {
         this.particles = [];
         this.environment = environment;
         this.log = [];
+        this.runnung = false;
     }
 
-    initGrid() {
+    /**
+     * Place all agents at random points without overlapping.
+     * Clear stats.
+     */
+    reset() {
+        this.runnung = false;
         this.log = [];
         this.particles = [];
         let density = 25;
@@ -36,11 +46,11 @@ export class SimulationState {
                     0, 0, RADIUS, false, AgentState.HEALTHY));
             }
         }
-        this.changeIsolationRate();
-        this.changeSickRate();
+        this.updateIsolationRate();
+        this.updateSickRate();
     }
 
-    changeIsolationRate() {
+    updateIsolationRate() {
         let isolationRate = simulationParameters.isolationRate;
         for (const particle of this.particles) {
             let movable = Math.random() > isolationRate;
@@ -53,18 +63,36 @@ export class SimulationState {
         }
     }
 
-    changeSickRate() {
+    updateSickRate() {
         let sickRate = simulationParameters.sickRate;
         for (const particle of this.particles) {
             particle.state = Math.random() < sickRate ? AgentState.SICK : AgentState.HEALTHY;
         }
     }
 
-    addLogEntry(entry) {
-        this.log.push(entry);
+    saveCurrentStats() {
+        let healthy = 0;
+        let sick = 0;
+        let immune = 0;
+        let deceased = 0;
+        for (let particle of this.particles) {
+            if (particle.state === AgentState.HEALTHY) {
+                healthy++;
+            }
+            if (particle.state === AgentState.SICK) {
+                sick++;
+            }
+            if (particle.state === AgentState.IMMUNE) {
+                immune++;
+            }
+            if (particle.state === AgentState.DECEASED) {
+                deceased++;
+            }
+        }
+        this.log.push(new SimulationStats(healthy, sick, immune, deceased));
     }
 
-    peekLogEntry() {
+    getLastStat() {
         return this.log[this.log.length - 1];
     }
 }

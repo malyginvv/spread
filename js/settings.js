@@ -25,6 +25,8 @@ export default class SettingsController {
         this.rangeInfection.addEventListener('input', this.onInfectionInput);
         this.rangeDuration.addEventListener('input', this.onDurationInput);
         this.rangeCfr.addEventListener('input', this.onCfrInput);
+
+        this.updateSettings();
     }
 
     updateSettings() {
@@ -49,7 +51,6 @@ export default class SettingsController {
         let value = event.target.value;
         this.isolationValue.innerText = value + '%';
         simulationParameters.isolationRate = value / 100;
-        this.controller.onIsolationRateChange();
     }
 
     onSickInput(event) {

@@ -1,4 +1,4 @@
-export default class SimulationLogEntry {
+export default class SimulationStats {
     constructor(healthy, sick, immune, deceased) {
         this.healthy = healthy;
         this.sick = sick;

@@ -28,34 +28,35 @@ export class Renderer {
 
 const LOG_HEIGHT = 100;
 
-export class LogRenderer {
+export class StatsRenderer {
     constructor(context, state) {
         this.context = context;
         this.state = state;
     }
 
     render() {
-        let logEntry = this.state.peekLogEntry();
-        if (!logEntry) {
+        let stat = this.state.getLastStat();
+        if (!stat) {
             this.context.fillStyle = 'rgb(255,255,255)';
             this.context.fillRect(0, 0, 600, LOG_HEIGHT);
             return;
         }
+        // update one column of pixels at a time
         let column = this.state.log.length - 1;
         // from top to bottom: deceased, immune, healthy, sick
-        let deceasedHeight = LOG_HEIGHT * logEntry.deceased / logEntry.total;
+        let deceasedHeight = LOG_HEIGHT * stat.deceased / stat.total;
         this.context.fillStyle = AgentState.DECEASED.color;
         this.context.fillRect(column, 0, 1, deceasedHeight);
 
-        let immuneHeight = LOG_HEIGHT * logEntry.immune / logEntry.total;
+        let immuneHeight = LOG_HEIGHT * stat.immune / stat.total;
         this.context.fillStyle = AgentState.IMMUNE.color;
         this.context.fillRect(column, deceasedHeight, 1, immuneHeight);
 
-        let healthyHeight = LOG_HEIGHT * logEntry.healthy / logEntry.total;
+        let healthyHeight = LOG_HEIGHT * stat.healthy / stat.total;
         this.context.fillStyle = AgentState.HEALTHY.color;
         this.context.fillRect(column, deceasedHeight + immuneHeight, 1, healthyHeight);
 
-        let sickHeight = LOG_HEIGHT * logEntry.sick / logEntry.total;
+        let sickHeight = LOG_HEIGHT * stat.sick / stat.total;
         this.context.fillStyle = AgentState.SICK.color;
         this.context.fillRect(column, deceasedHeight + immuneHeight + healthyHeight, 1, sickHeight);
     }
