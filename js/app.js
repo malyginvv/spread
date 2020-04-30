@@ -4,7 +4,7 @@ import Environment from "./sim/environment.js";
 import SettingsController from "./settings.js";
 
 const app = async () => {
-    const environment = new Environment(1, 1); // unit box for now
+    const environment = new Environment();
     const state = new SimulationState(environment);
     const controller = new Controller(state);
     controller.settingsController = new SettingsController(controller);

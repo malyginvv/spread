@@ -1,7 +1,3 @@
-canvas {
-    border: 1px solid black;
-}
-
 html {
     background-color: #ffffff;
     font-family: 'Roboto', sans-serif;
@@ -48,31 +44,86 @@ html {
     }
 
     .centered {
-        width: 600px;
+        width: 804px;
         margin: auto;
     }
 
     .content {
-        width: 800px;
+        width: 900px;
         margin: auto;
     }
 
+    .stat-label {
+        width: 150px;
+    }
+
+    .stat-value {
+        width: 45px;
+    }
+
     .range-label {
-        width: 35%;
+        width: 30%;
     }
 
     .range-block {
         display: table-cell;
-        width: 60%;
+        width: 65%;
     }
 
     .range-slider {
-        width: 21em;
+        width: 469px;
     }
 }
 
+.stats {
+    clear: both;
+    margin-bottom: 1em;
+    overflow: auto;
+}
+
+.current-values {
+    float: left;
+}
+
+.stat-row {
+    margin-bottom: 0.3em;
+}
+
+.stat-label {
+    display: inline-block;
+}
+
+.stat-value {
+    display: inline-block;
+}
+
+#stat-healthy {
+    color: #e5ac00;
+}
+
+#stat-sick {
+    color: #c90005;
+}
+
+#stat-immune {
+    color: #008082;
+}
+
+#stat-deceased {
+    color: #000000;
+}
+
+.stat-graph {
+    float: right;
+    margin-right: 1px;
+}
+
 canvas {
+    border: 1px solid #333333;
     display: block;
+}
+
+#simulation {
     margin: auto auto 1em;
 }
 
@@ -91,7 +142,6 @@ canvas {
 
 button {
     border: none;
-    border-radius: 0.5em;
     background-color: #333333;
     color: #eeeeee;
     font-size: 1vw;
@@ -131,13 +181,14 @@ button:disabled {
     width: 3em;
     vertical-align: middle;
 }
+
 .range-value:disabled {
     background-color: #666666;
 }
 
 .range-slider {
     display: table-cell;
-    margin: 0 1em;
+    margin-left: 1em;
     vertical-align: middle;
     height: 2em;
     border-radius: 0.5em;

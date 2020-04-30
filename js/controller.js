@@ -2,7 +2,6 @@ import Simulation from "./sim/simulation.js";
 import {StatsRenderer, Renderer} from "./renderer.js";
 
 export const SIM_LENGTH = 20000;
-const LOG_UPDATE_TIME = SIM_LENGTH / 600;
 
 /**
  * Application controller.
@@ -11,14 +10,25 @@ export default class Controller {
     constructor(state) {
         let canvas = document.getElementById('simulation');
         let context = canvas.getContext('2d');
-        let logCanvas = document.getElementById('simulation-log');
-        let logContext = logCanvas.getContext('2d');
+        let statsCanvas = document.getElementById('simulation-log');
+        let statsContext = statsCanvas.getContext('2d');
+        let statHealthy = document.getElementById('stat-healthy');
+        let statSick = document.getElementById('stat-sick');
+        let statImmune = document.getElementById('stat-immune');
+        let statDeceased = document.getElementById('stat-deceased');
+
+        canvas.width = state.environment.canvasWidth;
+        canvas.height = state.environment.canvasHeight;
+        statsCanvas.width = state.environment.statsCanvasWidth;
+        statsCanvas.height = state.environment.statsCanvasHeight;
+        this.statsUpdateTime = SIM_LENGTH / state.environment.statsCanvasWidth;
+
         this.buttonRun = document.getElementById('button-run');
         this.buttonReset = document.getElementById('button-reset');
 
         this.state = state;
         this.renderer = new Renderer(context, state);
-        this.logRenderer = new StatsRenderer(logContext, state);
+        this.statsRenderer = new StatsRenderer(statsContext, state, statHealthy, statSick, statImmune, statDeceased);
         this.lastTimestamp = 0;
         this.started = 0;
         this.ready = false;
@@ -42,12 +52,13 @@ export default class Controller {
             this.ready = true;
         }
         this.renderer.render();
-        this.logRenderer.render();
+        this.statsRenderer.render();
     }
 
     onSickRateChange() {
         this.state.updateSickRate();
         this.renderer.render();
+        this.statsRenderer.render();
     }
 
     _runSimulation() {
@@ -88,10 +99,10 @@ export default class Controller {
         this.renderer.render(timePassed);
 
         // update log if needed
-        if (timestamp - this.lastTimestamp > LOG_UPDATE_TIME) {
+        if (timestamp - this.lastTimestamp > this.statsUpdateTime) {
             this.lastTimestamp = timestamp;
-            this.state.saveCurrentStats();
-            this.logRenderer.render();
+            this.state.saveCurrentStat();
+            this.statsRenderer.render();
         }
 
         if (timePassed < SIM_LENGTH) {

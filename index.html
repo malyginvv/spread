@@ -63,16 +63,37 @@
                 <input id="range-cfr" class="range-slider" type="range" min="0" max="100" value="1">
             </div>
         </div>
+
+        <div class="stats">
+            <div class="current-values">
+                <div class="stat-row">
+                    <span class="stat-label">Здоровые:</span><span id="stat-healthy" class="stat-value"></span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Зараженные:</span><span id="stat-sick" class="stat-value"></span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">С иммунитетом:</span><span id="stat-immune" class="stat-value"></span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Погибшие:</span><span id="stat-deceased" class="stat-value"></span>
+                </div>
+            </div>
+            <div class="stat-graph">
+                <canvas id="simulation-log" width="600" height="100">
+                </canvas>
+            </div>
+        </div>
+        <canvas id="simulation" width="600" height="600">
+            <div>Ваш браузер не поддерживается.</div>
+        </canvas>
+
+        <div id="control-buttons">
+            <button id="button-run">Запуск</button>
+            <button id="button-reset">Сброс</button>
+        </div>
     </div>
-    <canvas id="simulation-log" width="600" height="100">
-    </canvas>
-    <canvas id="simulation" width="600" height="600">
-        <div>Ваш браузер не поддерживается.</div>
-    </canvas>
-    <div id="control-buttons" class="centered">
-        <button id="button-run">Запуск</button>
-        <button id="button-reset">Сброс</button>
-    </div>
+
 </div>
 <script type="module" src="js/app.js"></script>
 </body>

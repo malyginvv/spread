@@ -26,7 +26,6 @@ export class SimulationState {
         this.particles = [];
         this.environment = environment;
         this.log = [];
-        this.runnung = false;
     }
 
     /**
@@ -34,13 +33,12 @@ export class SimulationState {
      * Clear stats.
      */
     reset() {
-        this.runnung = false;
         this.log = [];
         this.particles = [];
         let density = 25;
         let offsetLimit = 0.5 / density - RADIUS;
-        for (let i = 1; i < density; i++) {
-            for (let j = 1; j < density; j++) {
+        for (let i = 1; i < density * this.environment.boxWidth; i++) {
+            for (let j = 1; j < density * this.environment.boxHeight; j++) {
                 this.particles.push(new Particle(i / density + (Math.random() - 0.5) * offsetLimit,
                     j / density + (Math.random() - 0.5) * offsetLimit,
                     0, 0, RADIUS, false, AgentState.HEALTHY));
@@ -70,7 +68,11 @@ export class SimulationState {
         }
     }
 
-    saveCurrentStats() {
+    saveCurrentStat() {
+        this.log.push(this._getCurrentStat());
+    }
+
+    _getCurrentStat() {
         let healthy = 0;
         let sick = 0;
         let immune = 0;
@@ -89,10 +91,17 @@ export class SimulationState {
                 deceased++;
             }
         }
-        this.log.push(new SimulationStats(healthy, sick, immune, deceased));
+        return new SimulationStats(healthy, sick, immune, deceased);
     }
 
-    getLastStat() {
+    getCurrentStat() {
+        if (this.isStatsEmpty()) {
+            return this._getCurrentStat();
+        }
         return this.log[this.log.length - 1];
+    }
+
+    isStatsEmpty() {
+        return this.log.length === 0;
     }
 }
