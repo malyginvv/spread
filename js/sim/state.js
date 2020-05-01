@@ -1,6 +1,6 @@
-import Particle from "./particle.js";
-import simulationParameters from "./parameters.js";
-import SimulationStats from "./stats.js";
+import Particle from './particle.js';
+import simulationParameters from './parameters.js';
+import SimulationStats from './stats.js';
 
 /**
  * Agent state.

@@ -1,4 +1,4 @@
-import {AgentState} from "./state.js";
+import {AgentState} from './state.js';
 
 /**
  * Calculates particle-on-particle and particle-on-wall collision times.

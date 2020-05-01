@@ -1,5 +1,5 @@
-import Simulation from "./sim/simulation.js";
-import {Renderer, StatsRenderer} from "./renderer.js";
+import Simulation from './sim/simulation.js';
+import {Renderer, StatsRenderer} from './renderer.js';
 
 export const SIM_LENGTH = 20000;
 const DEFAULT_FPS = 60;

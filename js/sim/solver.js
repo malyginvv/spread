@@ -1,6 +1,6 @@
-import {AgentState} from "./state.js";
-import simulationParameters from "./parameters.js";
-import {Death, Recovery} from "./event.js";
+import {AgentState} from './state.js';
+import simulationParameters from './parameters.js';
+import {Death, Recovery} from './event.js';
 
 /**
  * Solves collisions and state changes.

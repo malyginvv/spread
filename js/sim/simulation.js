@@ -1,7 +1,7 @@
-import PriorityQueue from "./priority-queue.js";
+import PriorityQueue from './priority-queue.js';
 import {CollisionWithWall, EventType, ParticleCollision, Redraw} from './event.js'
-import Predictor from "./predictor.js";
-import Solver from "./solver.js";
+import Predictor from './predictor.js';
+import Solver from './solver.js';
 
 /**
  * Port of CollisionSystem from algs4 by Robert Sedgewick and Kevin Wayne.

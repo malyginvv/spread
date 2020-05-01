@@ -1,4 +1,4 @@
-import {AgentState} from "./sim/state.js";
+import {AgentState} from './sim/state.js';
 
 const END_ANGLE = Math.PI * 2;
 

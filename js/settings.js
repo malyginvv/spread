@@ -1,5 +1,5 @@
-import simulationParameters from "./sim/parameters.js";
-import {SIM_LENGTH} from "./controller.js";
+import simulationParameters from './sim/parameters.js';
+import {SIM_LENGTH} from './controller.js';
 
 export default class SettingsController {
     constructor(controller) {

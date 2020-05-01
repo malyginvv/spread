@@ -1,7 +1,7 @@
 import {SimulationState} from './sim/state.js';
 import Controller from './controller.js';
-import Environment from "./sim/environment.js";
-import SettingsController from "./settings.js";
+import Environment from './sim/environment.js';
+import SettingsController from './settings.js';
 
 const app = async () => {
     const environment = new Environment();
