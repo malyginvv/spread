@@ -31,6 +31,7 @@ export default class Controller {
         this.statsRenderer = new StatsRenderer(statsContext, state, statHealthy, statSick, statImmune, statDeceased);
         this.lastTimestamp = 0;
         this.started = 0;
+        this.statsRendered = 0;
         this.ready = false;
         this.simulation = new Simulation(state, SIM_LENGTH / 1000);
         this.animationFrameHandle = null;
@@ -65,6 +66,7 @@ export default class Controller {
         this._prepareSimulation();
         this.started = 0;
         this.lastTimestamp = 0;
+        this.statsRendered = 0;
         this.buttonRun.disabled = true;
         this.simulation.init();
         this.animationFrameHandle = window.requestAnimationFrame(this._step);

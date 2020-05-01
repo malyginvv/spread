@@ -8,15 +8,14 @@ import SimulationStats from "./stats.js";
  * @enum {{color: string}}
  */
 export const AgentState = Object.freeze({
-    HEALTHY: {color: '#e5ac00'},
-    SICK: {color: '#c90005'},
-    IMMUNE: {color: '#008082'},
+    HEALTHY: {color: '#85c0f9'},
+    SICK: {color: '#f5793a'},
+    IMMUNE: {color: '#a95aa1'},
     DECEASED: {color: '#000000'},
 });
 
 const MIN_VELOCITY = 0.03;
 const MAX_VELOCITY = 0.09;
-const RADIUS = 0.007;
 
 /**
  * State of the simulation and stats on current run.
@@ -36,12 +35,12 @@ export class SimulationState {
         this.log = [];
         this.particles = [];
         let density = 25;
-        let offsetLimit = 0.5 / density - RADIUS;
+        let offsetLimit = 0.5 / density - this.environment.agentRadius;
         for (let i = 1; i < density * this.environment.boxWidth; i++) {
             for (let j = 1; j < density * this.environment.boxHeight; j++) {
                 this.particles.push(new Particle(i / density + (Math.random() - 0.5) * offsetLimit,
                     j / density + (Math.random() - 0.5) * offsetLimit,
-                    0, 0, RADIUS, false, AgentState.HEALTHY));
+                    0, 0, this.environment.agentRadius, false, AgentState.HEALTHY));
             }
         }
         this.updateIsolationRate();
@@ -99,6 +98,10 @@ export class SimulationState {
             return this._getCurrentStat();
         }
         return this.log[this.log.length - 1];
+    }
+
+    getCurrentStatIndex() {
+        return this.log.length - 1;
     }
 
     isStatsEmpty() {

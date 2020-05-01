@@ -23,7 +23,7 @@ export class Renderer {
             let radiusMultiplier = particle.state === AgentState.DECEASED ? 1 - particle.deactivationProgress(time) : 1;
             this.context.fillStyle = particle.state.color;
             this.context.beginPath();
-            this.context.arc(x, y, particle.radius * 600 * radiusMultiplier, 0, END_ANGLE, false);
+            this.context.arc(x, y, particle.radius * this.canvasHeight * radiusMultiplier, 0, END_ANGLE, false);
             this.context.fill();
         }
     }
@@ -56,7 +56,7 @@ export class StatsRenderer {
         }
 
         // update one column of pixels at a time
-        let column = this.state.log.length - 1;
+        let column = this.state.getCurrentStatIndex();
 
         // from top to bottom: deceased, immune, healthy, sick
         let deceasedHeight = this.canvasHeight * stat.deceased / stat.total;
