@@ -16,6 +16,7 @@ export const AgentState = Object.freeze({
 
 const MIN_VELOCITY = 0.03;
 const MAX_VELOCITY = 0.09;
+const DENSITY = 21;
 
 /**
  * State of the simulation and stats on current run.
@@ -34,12 +35,11 @@ export class SimulationState {
     reset() {
         this.log = [];
         this.particles = [];
-        let density = 25;
-        let offsetLimit = 0.5 / density - this.environment.agentRadius;
-        for (let i = 1; i < density * this.environment.boxWidth; i++) {
-            for (let j = 1; j < density * this.environment.boxHeight; j++) {
-                this.particles.push(new Particle(i / density + (Math.random() - 0.5) * offsetLimit,
-                    j / density + (Math.random() - 0.5) * offsetLimit,
+        let offsetLimit = 0.5 / DENSITY - this.environment.agentRadius;
+        for (let i = 1; i < DENSITY * this.environment.boxWidth; i++) {
+            for (let j = 1; j < DENSITY * this.environment.boxHeight; j++) {
+                this.particles.push(new Particle(i / DENSITY + (Math.random() - 0.5) * offsetLimit,
+                    j / DENSITY + (Math.random() - 0.5) * offsetLimit,
                     0, 0, this.environment.agentRadius, false, AgentState.HEALTHY));
             }
         }

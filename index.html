@@ -11,20 +11,35 @@
 <body>
 <div id="content" class="content">
     <h3>Проект</h3>
-    <p>На этой странице представлена симуляция распространения болезни, показателями которой можно управлять.
-        По мотивам статьи <a href="https://www.washingtonpost.com/graphics/2020/health/corona-simulation-russian/">
-            Washington Post</a>.
+    <p>Меня впечатлила <a href="https://www.washingtonpost.com/graphics/2020/health/corona-simulation-russian/">
+        статья Харри Стивенса из Washington Post о распространении таких болезней, как COVID-19</a>.
+        Симуляция, представленная в статье, простая и наглядная, но мне хотелось, чтобы параметрами такой симуляции
+        можно было управлять самому. Поэтому я сделал свою версию симуляции, и вот что получилось.
     </p>
+
+    <h3>Внимание!</h3>
+    <p>Данная симуляция <strong>не является точным описанием распространения любой реальной болезни</strong>.</p>
+
     <h3>Правила</h3>
-    <p>Правила довольно просты:</p>
-    <ol>
-        <li>Имеется ограниченная территория в виде квадрата.</li>
+    <p>Правила просты:</p>
+    <ul>
+        <li>Имеется ограниченная территория.</li>
         <li>Население представлено в виде кружков.</li>
         <li>Часть населения находится на самоизоляции и не движется, остальные свободно перемещаются.</li>
-        <li>В начале симуляции болеет часть населения.</li>
-        <li>Больной человек заражает здорового при контакте с заданной вероятностью.</li>
-        <li>Больной может умереть с заданной вероятностью. Этот параметр называется летальность.</li>
-    </ol>
+        <li>В начале симуляции <span class="stat-sick">болеет</span> часть населения.</li>
+        <li><span class="stat-sick">Больной</span> человек заражает <span class="stat-healthy">здорового</span> при
+            контакте с заданной вероятностью.
+        </li>
+        <li>Спустя некоторое время <span class="stat-sick">больной</span> <span
+                class="stat-immune">выздоравливает</span> и приобретает <span class="stat-immune">иммунитет</span>.
+            Теперь он не может заболеть повторно или заразить других.
+        </li>
+        <li>Также <span class="stat-sick">больной</span> может <span class="stat-deceased">умереть</span> с заданной
+            вероятностью. Этот параметр называется летальность.
+        </li>
+    </ul>
+
+    <h3>Настройки</h3>
     <div class="centered">
         <div class="control">
             <label class="range-label" for="range-isolation">На самоизоляции:</label>
@@ -67,16 +82,20 @@
         <div class="stats">
             <div class="current-values">
                 <div class="stat-row">
-                    <span class="stat-label">Здоровые:</span><span id="stat-healthy" class="stat-value"></span>
+                    <span class="stat-label">Здоровых:</span>
+                    <span id="stat-healthy" class="stat-value stat-healthy"></span>
                 </div>
                 <div class="stat-row">
-                    <span class="stat-label">Зараженные:</span><span id="stat-sick" class="stat-value"></span>
+                    <span class="stat-label">Больных:</span>
+                    <span id="stat-sick" class="stat-value stat-sick"></span>
                 </div>
                 <div class="stat-row">
-                    <span class="stat-label">С иммунитетом:</span><span id="stat-immune" class="stat-value"></span>
+                    <span class="stat-label">Выздоровевших:</span>
+                    <span id="stat-immune" class="stat-value stat-immune"></span>
                 </div>
                 <div class="stat-row">
-                    <span class="stat-label">Погибшие:</span><span id="stat-deceased" class="stat-value"></span>
+                    <span class="stat-label">Погибших:</span>
+                    <span id="stat-deceased" class="stat-value stat-deceased"></span>
                 </div>
             </div>
             <div class="stat-graph">
@@ -94,6 +113,15 @@
         </div>
     </div>
 
+    <h3>Интересные ссылки</h3>
+    <p><a href="https://www.washingtonpost.com/graphics/2020/health/corona-simulation-russian/">Статья, которая
+        вдохновила меня на создание этой симуляции</a>.</p>
+    <p><a href="https://meltingasphalt.com/interactive/outbreak/">Другой подход к симуляции распространения болезней</a>.
+    </p>
+    <p><a href="https://www.youtube.com/watch?v=gxAaO2rsdIs">Эксперименты с моделью эпидемии SIR</a>.
+    </p>
+    <p><a href="https://github.com/malyginvv/spread">Исходный код этого проекта</a>.
+    </p>
 </div>
 <script type="module" src="js/app.js"></script>
 </body>
