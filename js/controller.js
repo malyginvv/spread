@@ -1,7 +1,8 @@
 import Simulation from "./sim/simulation.js";
-import {StatsRenderer, Renderer} from "./renderer.js";
+import {Renderer, StatsRenderer} from "./renderer.js";
 
 export const SIM_LENGTH = 20000;
+const DEFAULT_FPS = 60;
 
 /**
  * Application controller.
@@ -30,10 +31,10 @@ export default class Controller {
         this.renderer = new Renderer(context, state);
         this.statsRenderer = new StatsRenderer(statsContext, state, statHealthy, statSick, statImmune, statDeceased);
         this.lastTimestamp = 0;
+        this.lastStatsTimestamp = 0;
         this.started = 0;
-        this.statsRendered = 0;
         this.ready = false;
-        this.simulation = new Simulation(state, SIM_LENGTH / 1000);
+        this.simulation = new Simulation(state, SIM_LENGTH / 1000, DEFAULT_FPS);
         this.animationFrameHandle = null;
         this.settingsController = null;
         this._step = this._step.bind(this);
@@ -66,7 +67,7 @@ export default class Controller {
         this._prepareSimulation();
         this.started = 0;
         this.lastTimestamp = 0;
-        this.statsRendered = 0;
+        this.lastStatsTimestamp = 0;
         this.buttonRun.disabled = true;
         this.simulation.init();
         this.animationFrameHandle = window.requestAnimationFrame(this._step);
@@ -95,14 +96,17 @@ export default class Controller {
             this.started = timestamp;
         }
 
+        // update simulation FPS
+        this.simulation.fps = this.lastTimestamp ? Math.round(1000 / (timestamp - this.lastTimestamp)) : DEFAULT_FPS;
+
         // main loop
         this.simulation.step();
         let timePassed = timestamp - this.started;
         this.renderer.render(timePassed);
 
         // update log if needed
-        if (timestamp - this.lastTimestamp > this.statsUpdateTime) {
-            this.lastTimestamp = timestamp;
+        if (timestamp - this.lastStatsTimestamp > this.statsUpdateTime) {
+            this.lastStatsTimestamp = this.lastStatsTimestamp ? this.lastStatsTimestamp + this.statsUpdateTime : timestamp;
             this.state.saveCurrentStat();
             this.statsRenderer.render();
         }
@@ -113,6 +117,8 @@ export default class Controller {
         } else {
             this._onSimulationEnd();
         }
+
+        this.lastTimestamp = timestamp;
     }
 
     _onSimulationEnd() {

@@ -3,14 +3,13 @@ import {CollisionWithWall, EventType, ParticleCollision, Redraw} from './event.j
 import Predictor from "./predictor.js";
 import Solver from "./solver.js";
 
-const FPS = 60;
 /**
  * Port of CollisionSystem from algs4 by Robert Sedgewick and Kevin Wayne.
  * @see https://github.com/kevin-wayne/algs4/blob/master/src/main/java/edu/princeton/cs/algs4/CollisionSystem.java
  */
 export default class Simulation {
 
-    constructor(state, limit) {
+    constructor(state, limit, fps) {
         this.state = state;
         this.limit = limit;
         // simulation clock time in seconds
@@ -18,6 +17,7 @@ export default class Simulation {
         this.pq = new PriorityQueue();
         this.predictor = new Predictor(state.environment);
         this.solver = new Solver();
+        this.fps = fps;
     }
 
     init() {
@@ -106,7 +106,7 @@ export default class Simulation {
 
     redraw() {
         if (this.time < this.limit) {
-            this.pq.insert(new Redraw(this.time + 1.0 / FPS));
+            this.pq.insert(new Redraw(this.time + 1.0 / this.fps));
         }
     }
 }
