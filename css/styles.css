@@ -70,7 +70,7 @@ body {
     }
 
     .range-slider {
-        width: 469px;
+        width: 470px;
     }
 
     .stats {
@@ -129,7 +129,7 @@ body {
 .range-slider {
     background: #333333;
     border-radius: 0.2em;
-    display: table-cell;
+    display: inline-block;
     height: 2px;
     margin-left: 1em;
     outline: none;
@@ -141,12 +141,21 @@ body {
     background-color: #666666;
 }
 
-input[type=range]::-webkit-slider-thumb, input[type=range]::-moz-range-thumb {
+input[type=range]::-webkit-slider-thumb {
     border: 1em #333333;
+    border-radius: 50%;
     height: 1em;
     width: 1em;
     background: #333333;
     -webkit-appearance: none;
+}
+
+input[type=range]::-moz-range-thumb {
+    border: 1em #333333;
+    border-radius: 50%;
+    height: 1em;
+    width: 1em;
+    background: #333333;
 }
 
 .stat-row {
