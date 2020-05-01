@@ -1,0 +1,32 @@
+{
+  "name": "spread",
+  "version": "1.0.0",
+  "description": "This project presents a simulation of the spread of fake disease through a population",
+  "main": "app.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/malyginvv/spread.git"
+  },
+  "keywords": [],
+  "author": "Vasilii Malygin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/malyginvv/spread/issues"
+  },
+  "homepage": "https://github.com/malyginvv/spread#readme",
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/plugin-transform-runtime": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "babel-loader": "^8.1.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.9.6",
+    "core-js": "^3.6.5"
+  }
+}

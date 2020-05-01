@@ -1,2 +1,6 @@
 .idea
 *.iml
+node_modules
+public
+package-lock.json
+js/*.min.js
