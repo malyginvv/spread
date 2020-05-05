@@ -5,14 +5,11 @@
       {
         "useBuiltIns": "usage",
         "corejs": "3",
-        "targets": {
-          "browsers": [
-            "last 5 versions",
-            "ie >= 8"
-          ]
-        }
+        "targets": "> 2%, not dead"
       }
     ]
   ],
-  "plugins": ["@babel/plugin-transform-runtime"]
+  "plugins": [
+    "@babel/plugin-transform-runtime"
+  ]
 }
