@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Simulation of disease spread</title>
+    <meta name="description" content="Interactive simulation of the spread of infectious disease">
+    <meta name="keywords" content="simulation, interactive, spread, infection"/>
+    <meta name="language" content="EN">
+    <meta name="robots" content="nofollow"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="content" class="content">
+    <h1>Viral simulation</h1>
+    <p class="gray author">Author: Vasilii Malygin</p>
+    <p class="gray">Translations: <a href="ru.html">русский</a></p>
+    <h3>Project</h3>
+    <p>I was impressed by <a href="https://www.washingtonpost.com/graphics/2020/world/corona-simulator/">
+        Harry Stevens's article at Washington Post on outbreaks like COVID-19</a>.
+        His work was clear and easy to understand, but I wanted to be able to control
+        the parameters of such simulation. That's why I made this project.
+    </p>
+
+    <h3>Warning!</h3>
+    <p>This simulation <strong>is not an accurate model of how real diseases spread through a population</strong>.</p>
+
+    <h3>Rules</h3>
+    <p>Rules are simple:</p>
+    <ul>
+        <li>There is a restricted territory.</li>
+        <li>People are represented by circles.</li>
+        <li>Some of the population are self-isolating while others roam freely.</li>
+        <li>At the beginning of the simulation part of the population is <span class="stat-sick">infected</span>.</li>
+        <li><span class="stat-sick">Infected</span> person spreads the infection to a <span
+                class="stat-healthy">healthy</span> individual
+            on contact with a set probability.
+        </li>
+        <li>After some time <span class="stat-sick">infected</span> <span class="stat-immune">recovers</span>
+            and acquires <span class="stat-immune">immunity</span>. Now they could neither get infected again nor infect
+            others.
+        </li>
+        <li>Also <span class="stat-sick">infected</span> could <span class="stat-deceased">die</span> with a set
+            probability.
+            This is called a case fatality rate.
+        </li>
+    </ul>
+
+    <h3>Settings</h3>
+    <div class="centered">
+        <div class="control">
+            <label class="range-label" for="range-isolation">Self-isolating:</label>
+            <div class="range-block">
+                <span id="isolation-value" class="range-value">50%</span>
+                <input id="range-isolation" class="range-slider" type="range" min="0" max="100" value="50">
+            </div>
+        </div>
+        <div class="control">
+            <label class="range-label" for="range-sick">Infected:</label>
+            <div class="range-block">
+                <span id="sick-value" class="range-value">1%</span>
+                <input id="range-sick" class="range-slider" type="range" min="1" max="100" value="1">
+            </div>
+        </div>
+        <div class="control">
+            <label class="range-label" for="range-infection">Chance of getting infected:</label>
+            <div class="range-block">
+                <span id="infection-value" class="range-value">100%</span>
+                <input id="range-infection" class="range-slider" type="range" min="1" max="100" value="1">
+            </div>
+        </div>
+        <div class="control">
+            <label class="range-label" for="range-duration"><abbr
+                    title="Average duration as percentage of total simulation time">Duration</abbr>
+                of a disease:</label>
+            <div class="range-block">
+                <span id="duration-value" class="range-value">25%</span>
+                <input id="range-duration" class="range-slider" type="range" min="1" max="100" value="1">
+            </div>
+        </div>
+        <div class="control">
+            <label class="range-label" for="range-cfr">Case fatality rate:</label>
+            <div class="range-block">
+                <span id="cfr-value" class="range-value">1%</span>
+                <input id="range-cfr" class="range-slider" type="range" min="0" max="100" value="1">
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="current-values">
+                <div class="stat-row">
+                    <span class="stat-label">Healthy:</span>
+                    <span id="stat-healthy" class="stat-value stat-healthy"></span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Infected:</span>
+                    <span id="stat-sick" class="stat-value stat-sick"></span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Immune:</span>
+                    <span id="stat-immune" class="stat-value stat-immune"></span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Dead:</span>
+                    <span id="stat-deceased" class="stat-value stat-deceased"></span>
+                </div>
+            </div>
+            <div class="stat-graph">
+                <canvas id="simulation-log" width="600" height="100">
+                </canvas>
+            </div>
+        </div>
+        <canvas id="simulation" width="600" height="600">
+            <div>Browser is not supported.</div>
+        </canvas>
+
+        <div id="control-buttons">
+            <button id="button-run">Run</button>
+            <button id="button-reset">Reset</button>
+        </div>
+    </div>
+
+    <h3>See also</h3>
+    <ul>
+        <li><a href="https://www.washingtonpost.com/graphics/2020/world/corona-simulator/">The article that
+            inspired this project</a></li>
+        <li><a href="https://meltingasphalt.com/interactive/outbreak/">Outbreak by Kevin Simler</a></li>
+        <li><a href="https://www.youtube.com/watch?v=gxAaO2rsdIs">Simulating an epidemic (video)</a></li>
+        <li><a href="https://github.com/malyginvv/spread">Source code</a></li>
+    </ul>
+</div>
+<script src="js/app.min.js"></script>
+</body>
+</html>

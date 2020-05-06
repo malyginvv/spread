@@ -1,6 +1,6 @@
 body {
     background-color: #ffffff;
-    font-family: 'PT Serif', serif;
+    font-family: 'Roboto', serif;
     font-size: 13pt;
     margin: 0;
 }
@@ -99,6 +99,23 @@ body {
     button {
         font-size: 18px;
     }
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+
+.author {
+    text-align: center;
+}
+
+.gray, .gray a, .gray a:visited {
+    color: #666666;
+}
+
+.gray a:hover {
+    cursor: pointer;
 }
 
 .control {
